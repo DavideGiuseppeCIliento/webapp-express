@@ -25,6 +25,7 @@ function setImageUrl(data) {
 // # CONTROLLERS
 //--- INDEX FUNCTION
 function index(req, res) {
+  // Lista dei film
   const sqlIndex = `SELECT * FROM movies`;
 
   connection.query(sqlIndex, (err, results) => {
