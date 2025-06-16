@@ -1,0 +1,23 @@
+{
+  "name": "webapp-express",
+  "version": "1.0.0",
+  "description": "Progetto FullStack per Boolean.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "keywords": [
+    "movies",
+    "reviews"
+  ],
+  "author": "Davide Giuseppe Ciliento",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
+  }
+}
