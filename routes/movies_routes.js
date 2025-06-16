@@ -1,13 +1,13 @@
 // # IMPORT
 //--- IMPORT EXPRESS
 import express from "express";
+import movies_controller from "../controllers/movies_controller.js";
 // # ROUTER
 const router = express.Router();
 
 // # ROUTES
-router.get(`/`, (req, res) => {
-  res.send("Ciao Amico!");
-});
+//--- INDEX
+router.get(`/`, movies_controller.index);
 
 // # EXPORT
 export default router;
