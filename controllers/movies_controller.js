@@ -64,6 +64,7 @@ function show(req, res) {
     connection.query(sqlMovieIdReview, [id], (err, reviewResults) => {
       if (err) return res.status(500).json({ error: "Database query failed" });
 
+      //   Prendo alcune voci da reviewsResults
       const reviewsMovie = reviewResults.map((review) => ({
         id: review.id,
         name: review.name,
@@ -71,6 +72,7 @@ function show(req, res) {
         text: review.text,
       }));
 
+      //   Unisco le Reviews agli altri dati di movie
       movie = { ...movie, reviews: reviewsMovie };
 
       res.json(movie);
