@@ -9,6 +9,7 @@ const app = express();
 const port = 3000;
 
 // # MIDDLEWARE
+app.use(express.static("public"));
 
 // # CALL ROUTES
 app.use("/movies", movies_routes);
