@@ -98,7 +98,24 @@ function show(req, res) {
 }
 
 //--- STORE REVIEW
-function storeReview(req, res) {}
+function storeReview(req, res) {
+  const { id } = req.params;
+
+  const { name, vote, text } = req.body;
+
+  const sqlStoreReview = `INSERT INTO reviews 
+                          (movie_id, name, text, vote)
+                          VALUES (?, ?, ?, ?);`;
+
+  connection.query(sqlStoreReview, [id, name, text, vote], (err, result) => {
+    if (err) return res.status(500).json({ error: "Database query failed" });
+
+    res.status(201).json({
+      message: "Recensione salvata con successo",
+      review_id: result.insertId,
+    });
+  });
+}
 
 // # EXPORT
 export default { index, show, storeReview };
