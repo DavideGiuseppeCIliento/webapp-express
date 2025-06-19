@@ -99,9 +99,39 @@ function show(req, res) {
 
 //--- STORE REVIEW
 function storeReview(req, res) {
+  let error = [];
   const { id } = req.params;
 
   const { name, vote, text } = req.body;
+
+  if (!name || name.length < 2) {
+    error.push({
+      errorName: "name",
+      errorMessage: "Name impossible",
+    });
+  }
+
+  parsedVote = parseInt(vote);
+  if (!parsedVote || parsedVote < 1 || parsedVote > 5) {
+    error.push({
+      errorName: "vote",
+      errorMessage: "Vote is not valid",
+    });
+  }
+
+  if (!text || text.length < 5) {
+    error.push({
+      errorName: "text",
+      errorMessage: "Text is too short",
+    });
+  }
+
+  if (error.length !== 0) {
+    return res.status(403).json({
+      errorMessage: "Invalid Request",
+      error,
+    });
+  }
 
   const sqlStoreReview = `INSERT INTO reviews 
                           (movie_id, name, text, vote)
