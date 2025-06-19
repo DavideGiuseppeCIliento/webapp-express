@@ -8,10 +8,13 @@ import movies_routes from "./routes/movies_routes.js";
 // --- IMPORT MIDDLEWARE
 import errorHandler from "./middlewares/errorhandler.js";
 import notFound from "./middlewares/notFound.js";
+import cors from "cors";
 
 // # GLOBAL DATA
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 // # SET PUBLIC DIRECTORY
 app.use(express.static("public"));

@@ -32,6 +32,7 @@ function index(req, res) {
     if (err) return res.status(500).json({ error: "Database query failed" });
 
     const data = results;
+
     setImageUrl(data);
 
     res.json(data);
@@ -52,14 +53,18 @@ function show(req, res) {
                     FROM reviews
                     WHERE movie_id = ?;  `;
 
+  const sqlAverage = `SELECT AVG(vote) AS average_vote FROM reviews WHERE movie_id = ?`;
+
   connection.query(sqlMovieId, [id], (err, results) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
 
     if (results.length === 0) {
       return res.status(404).json({ message: "Film non trovato" });
     }
+
     // Il singolo film
     movie = results[0];
+    console.log(movie);
     setImageUrl(movie);
 
     connection.query(sqlMovieIdReview, [id], (err, reviewResults) => {
@@ -76,10 +81,24 @@ function show(req, res) {
       //   Unisco le Reviews agli altri dati di movie
       movie = { ...movie, reviews: reviewsMovie };
 
-      res.json(movie);
+      // Ora calcolo la media
+      connection.query(sqlAverage, [id], (err, avgResult) => {
+        if (err)
+          return res
+            .status(500)
+            .json({ error: "Errore nella query della media voto" });
+
+        const avg = avgResult[0].average_vote;
+        movie = { ...movie, verage_vote: avg };
+
+        res.json(movie);
+      });
     });
   });
 }
 
+//--- STORE REVIEW
+function storeReview(req, res) {}
+
 // # EXPORT
-export default { index, show };
+export default { index, show, storeReview };
